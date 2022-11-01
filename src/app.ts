@@ -6,5 +6,5 @@ app.get('/', (_, res) => {
 })
 
 
-console.log('hoilaaa')
+
 app.listen(port, () => console.log(`Running on port ${port}`))
