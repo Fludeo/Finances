@@ -7,4 +7,6 @@ app.get('/', (_, res) => {
 
 
 
-app.listen(port, () => console.log(`Running on port ${port}`))
+app.listen(port, () => {
+  console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
+});
