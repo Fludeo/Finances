@@ -1,8 +1,8 @@
 import  DIContainer,{ IDIContainer,object, use, factory,} from 'rsdi';
 import { Sequelize } from 'sequelize';
-import {RecordController,RecordService,RecordRepository, RecordModel} from '../modules/record/module'
-import {UserController,UserService, UserRepository, UserModel}  from '../modules/user/module'
-import {AuthController,AuthService ,AuthRepository, AuthModel}  from '../modules/auth/module'
+import { RecordController,RecordService,RecordRepository, RecordModel} from '../modules/record/module'
+import { UserController,UserService, UserRepository, UserModel}  from '../modules/user/module'
+import { AuthController,AuthService ,AuthRepository, AuthModel}  from '../modules/auth/module'
 import SetDataAssociations from './data_associations';
 
 
@@ -10,17 +10,17 @@ import SetDataAssociations from './data_associations';
 
 const dbConfig = ()=>{
 
-  if(process.env.PROJECT_STATUS === 'production'){
+  if(process.env.PROJECT_STATUS === 'development'){
     const sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: './data/production_database.db'
+    storage: './data/development_database.db'
     })
     return sequelize
   }
   else{
     const sequelize = new Sequelize({
       dialect: 'sqlite',
-      storage: './data/development_database.db'
+      storage: './data/production_database.db'
     });
     return sequelize
   }
@@ -100,13 +100,13 @@ return RecordModel.setup(container.get('sequelize'))
 
   export default function ConfigDIC() {
 
-    const container : any = new DIContainer();
+    const container  = new DIContainer();
   
     addCommonDefinitions(container);
-    addAuthDefinitions(container)
+    addAuthDefinitions(container);
     addRecordDefinitions(container);
     addUserDefinitions(container);
-    container.get('sequelize').sync()
-    SetDataAssociations(container);
+    (container as IDIContainer).get('sequelize').sync();
+    SetDataAssociations(container as IDIContainer);
     return container;
   };

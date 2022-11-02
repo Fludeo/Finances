@@ -10,9 +10,10 @@ const port = process.env.PORT
 
 
 import ConfigureDIC from './config/DIconfig'
-import { AuthController, initAuthModule } from './modules/auth/module'
+import { initAuthModule } from './modules/auth/module'
 import{ initRecordModule } from'./modules/record/module'
 import { initUserModule } from'./modules/user/module'
+import { IDIContainer } from "rsdi"
 
 // DIcontainer initialization
 
@@ -22,11 +23,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Routes initialization 
-
-  console.log((container.get('AuthController')).authService)
-  initAuthModule(app,container)
-  initRecordModule(app,container)
-  initUserModule(app,container)
+  initAuthModule(container as IDIContainer, app)
+  initRecordModule(container as IDIContainer, app)
+  initUserModule(container as IDIContainer, app)
 
 
 app.use(function (err: any , req : Request, res : Response , next :NextFunction){

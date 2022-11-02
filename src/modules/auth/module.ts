@@ -8,7 +8,7 @@ import AuthModel from "./model/AuthModel";
 
 
 
-const initAuthModule = (container: IDIContainer, app:Express ):void=> {
+const initAuthModule = (container:IDIContainer, app:Express ):void=> {
     const controller :AuthController = container.get('AuthController')
     controller.configureRoutes(app)
 }
