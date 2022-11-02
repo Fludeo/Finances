@@ -1,12 +1,44 @@
+import { Application, NextFunction, Request, Response } from "express"
+
+require('dotenv').config()
+
 import express from 'express'
+import cors from 'cors'
 const app = express()
-const port = 5000
-app.get('/', (_, res) => {
-  res.status(200).send()
+
+const port = process.env.PORT
+
+
+import ConfigureDIC from './config/DIconfig'
+import { AuthController, initAuthModule } from './modules/auth/module'
+import{ initRecordModule } from'./modules/record/module'
+import { initUserModule } from'./modules/user/module'
+
+// DIcontainer initialization
+
+const container = ConfigureDIC()
+app.use(cors())
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// Routes initialization 
+
+  console.log((container.get('AuthController')).authService)
+  initAuthModule(app,container)
+  initRecordModule(app,container)
+  initUserModule(app,container)
+
+
+app.use(function (err: any , req : Request, res : Response , next :NextFunction){
+ 
+
+  console.log(err)
+  res.status(err.code)
+  res.json({message: err.message})
+
 })
 
 
-
 app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
-});
+  console.log(`listening on port ${port}`)
+})
