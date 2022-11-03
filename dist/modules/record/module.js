@@ -10,8 +10,8 @@ const RecordService_1 = __importDefault(require("./service/RecordService"));
 exports.RecordService = RecordService_1.default;
 const RecordRepository_1 = __importDefault(require("./repository/RecordRepository"));
 exports.RecordRepository = RecordRepository_1.default;
-const RecordModel_js_1 = __importDefault(require("./model/RecordModel.js"));
-exports.RecordModel = RecordModel_js_1.default;
+const RecordModel_1 = __importDefault(require("./model/RecordModel"));
+exports.RecordModel = RecordModel_1.default;
 const initRecordModule = (container, app) => {
     const controller = container.get('RecordController');
     controller.configureRoutes(app);

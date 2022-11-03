@@ -4,7 +4,7 @@ import { IDIContainer } from "rsdi";
 import RecordController from "./controller/RecordController";
 import RecordService from "./service/RecordService";
 import RecordRepository from "./repository/RecordRepository";
-import RecordModel from "./model/RecordModel.js";
+import RecordModel from "./model/RecordModel";
 
 
 

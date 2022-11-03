@@ -17,14 +17,21 @@ const dbConfig = ()=>{
     })
     return sequelize
   }
-  else{
+  else if(process.env.PROJECT_STATUS ==='test'){
+    const sequelize = new Sequelize({
+      dialect: 'sqlite',
+      storage: './data/test_database.db'
+    });
+    return sequelize
+  }
+  else if (process.env.PROJECT_STATUS ==='production'){
     const sequelize = new Sequelize({
       dialect: 'sqlite',
       storage: './data/production_database.db'
     });
     return sequelize
   }
-  
+   throw Error('PROJECT_STATUS  env variable not found')
 }
 
 
