@@ -1,6 +1,6 @@
 
 import AuthRepository from "../repository/AuthRepository";
-import jwt, { VerifyOptions } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { UserService } from "../../user/module";
 import LoginDto from "../dto/LoginDto";
@@ -24,9 +24,11 @@ export default class AuthService {
         async login(userLogin :LoginDto,res :Response){
 
             const checkUser = await this.userService.getUserByEmail(userLogin.email) 
-            if(!(await bcrypt.compare(userLogin.password,checkUser.hash))){
-            throw new IncorrectPasswordError()
-             }
+
+            if(!(await comparePassword(userLogin.password,checkUser.hash))){
+                throw new IncorrectPasswordError()
+            }
+         
 
            const accessToken =  await this.giveAccessToken(checkUser,res)
            return accessToken
@@ -115,7 +117,10 @@ async logout (refreshToken :string){
         return accesToken   
     }
 
-
+ async function comparePassword (hash1:string,hash2:string){
+    const result = await bcrypt.compare(hash1,hash2)
+    return result
+ }
  
 
    async function setCookies (res : Response, refreshToken :string){

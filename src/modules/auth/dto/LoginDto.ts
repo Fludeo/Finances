@@ -15,9 +15,13 @@ export default class LoginDto {
             throw new ValidationError ('There is an empty field...')
         
         }
-        console.log(this)
+
         if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(this.email))){
             throw new ValidationError ('Invalid email!!!')
+        }
+
+        if(!(/^[A-Za-z]\w{7,14}$/.test(this.password))){
+            throw new ValidationError ('Invalid Password: 8-16 characters including numbers and starting with a letter')
         }
    
     }

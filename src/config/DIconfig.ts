@@ -18,10 +18,7 @@ const dbConfig = ()=>{
     return sequelize
   }
   else if(process.env.PROJECT_STATUS ==='test'){
-    const sequelize = new Sequelize({
-      dialect: 'sqlite',
-      storage: './data/test_database.db'
-    });
+    const sequelize = new Sequelize('sqlite::memory:');
     return sequelize
   }
   else if (process.env.PROJECT_STATUS ==='production'){

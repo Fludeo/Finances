@@ -28,7 +28,7 @@ export default class AuthController {
 
 
  async login(req : Request , res: Response, next : NextFunction){
-        
+        console.log(req.body)
     const loginDto = new LoginDto( req.body )
     
 try{
