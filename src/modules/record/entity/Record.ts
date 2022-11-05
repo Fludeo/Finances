@@ -1,6 +1,6 @@
 export default class Record {
 
-    id : number
+    id : number | undefined
     concept : string
     amount : number
     type : string
@@ -12,7 +12,7 @@ export default class Record {
     deletedAt : string | undefined
     
         constructor(
-          id : number,
+          id : number | undefined,
           concept : string,
           amount : number,
           type : string,

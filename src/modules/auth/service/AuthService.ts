@@ -72,7 +72,7 @@ async logout (refreshToken :string){
                     throw new InvalidTokenError()
                 }
                 
-                (req as Request & {user:any}).user = this.userService.getUserByEmail((user as {id:number , email:string}).email)
+                (req as Request & {user:any}).user =  user
                 next()
                
             })

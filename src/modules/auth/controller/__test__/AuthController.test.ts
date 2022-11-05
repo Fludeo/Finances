@@ -90,12 +90,13 @@ describe('Testing all methods and routes in AuthController', ()=>{
   
       test('Successfull login', async () => {
 
-     
+     //Signup new user
         const response = await request(app)
         .post(`/user/signup`)
         .send({name:'leandro', email:'medinaleandron@gmail.com', password:'somepassword'})
         expect(response.status).toEqual(200)
         
+      //Login new user
       const loginResponse= await request(app)
       .post(`/auth/login`)
       .send({email:'medinaleandron@gmail.com', password:'somepassword' })

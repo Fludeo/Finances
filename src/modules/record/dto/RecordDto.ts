@@ -3,7 +3,7 @@ import { ValidationError }from "../../user/errors/_index"
 
 export default class RecordDto {
 
-    id:number
+    id:number | undefined
     concept:string
     amount:number
     type:string

@@ -15,7 +15,7 @@ import RecordModel  from "../model/RecordModel"
     
      async addRecord (newRecord:Record, user:User){
 
-        const record = await this.recordModel.create({newRecord},{isNewRecord:true})
+        const record = await this.recordModel.create(newRecord,{isNewRecord:true})
           const userToAdd  = await UserModel.findByPk(user.id)
          
           await record.setUser(userToAdd)
