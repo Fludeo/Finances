@@ -4,8 +4,7 @@ require('dotenv').config()
 
 import express from 'express'
 import cors from 'cors'
-const app = express()
-
+export const app = express()
 const port = process.env.PORT
 
 
@@ -19,8 +18,9 @@ import { IDIContainer } from "rsdi"
 
 const container = ConfigureDIC()
 app.use(cors())
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 // Routes initialization 
   initAuthModule(container as IDIContainer, app)
@@ -33,7 +33,7 @@ app.use(function (err: any , req : Request, res : Response , next :NextFunction)
 
   console.log(err)
   res.status(err.code)
-  res.json({message: err.message})
+  res.json(err)
 
 })
 

@@ -2,14 +2,14 @@
 import AuthModel from "../model/AuthModel"
 
     export default class AuthRepository{
-        private authModel :AuthModel
+        private authModel 
         constructor(authModel : AuthModel){
-            this.authModel = authModel
+            this.authModel = authModel as any
         }
 
         async  saveRefreshToken (token : string){
 
-            const savedToken = AuthModel.build({refreshToken:token})
+            const savedToken = this.authModel.build({refreshToken:token})
       
             await savedToken.save()
       
@@ -18,7 +18,7 @@ import AuthModel from "../model/AuthModel"
             
             async removeRefreshToken (token : string){
              
-             const deleted = await AuthModel.destroy({where:{refreshToken: token}})
+             const deleted = await this.authModel.destroy({where:{refreshToken: token}})
              
           
           }
