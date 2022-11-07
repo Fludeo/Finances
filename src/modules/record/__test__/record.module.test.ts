@@ -1,25 +1,24 @@
-import { IDIContainer } from 'rsdi';
-import  { initRecordModule } from '../module';
 
-const app :any = jest.fn();
+import { initRecordModule } from '../module'
+
+const app: any = jest.fn()
 
 const controller = {
-  configureRoutes: jest.fn(),
-};
+  configureRoutes: jest.fn()
+}
 
 const container = {
-  get: jest.fn(() => controller),
-} as IDIContainer;
+  get: jest.fn(() => controller)
+}
 
 test('Record module gets initialized correctly', () => {
+  initRecordModule(container, app)
 
-  initRecordModule(container,app);
+  expect(container.get).toHaveBeenCalledTimes(1)
 
-  expect(container.get).toHaveBeenCalledTimes(1);
+  expect(container.get).toHaveBeenCalledWith('RecordController')
 
-  expect(container.get).toHaveBeenCalledWith('RecordController');
+  expect(controller.configureRoutes).toHaveBeenCalledTimes(1)
 
-  expect(controller.configureRoutes).toHaveBeenCalledTimes(1);
-
-  expect(controller.configureRoutes).toHaveBeenCalledWith(app);
-});
+  expect(controller.configureRoutes).toHaveBeenCalledWith(app)
+})

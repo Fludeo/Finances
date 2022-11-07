@@ -1,8 +1,7 @@
-import RecordDoesNotExist from "./RecordDoesNotExist";
-import RecordNotDefined from "./RecordNotDefined";
+import RecordDoesNotExist from './RecordDoesNotExist'
+import RecordNotDefined from './RecordNotDefined'
 
-
-export{
-    RecordDoesNotExist,
-    RecordNotDefined
+export {
+  RecordDoesNotExist,
+  RecordNotDefined
 }
