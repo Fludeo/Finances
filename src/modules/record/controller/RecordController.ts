@@ -47,6 +47,8 @@ export default class RecordController {
 
     req.params.category !== undefined && (filters.where.category = req.params.category)
 
+    console.log(filters)
+
     try {
       const records = await this.recordService.getRecords(filters)
 

@@ -9,9 +9,9 @@ export default class RecordDto {
   date: Date
 
   constructor ({ id, concept, amount, type, category, date }: { id: number, concept: string, amount: number, type: string, category: string, date: Date }) {
-    this.id = id
+    this.id = Number(id)
     this.concept = concept
-    this.amount = amount
+    this.amount = Number(amount)
     this.type = type
     this.category = category
     this.date = date
