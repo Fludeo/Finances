@@ -1,11 +1,10 @@
 export default class UserNotDefined extends Error {
-    code : number
+  code: number
 
-    constructor( ){
-        super()
-        this.name = this.constructor.name
-        this.message = 'User not defined!!!'
-        this.code = 400
-    }
-  
+  constructor () {
+    super()
+    this.name = this.constructor.name
+    this.message = 'User not defined!!!'
+    this.code = 400
+  }
 }

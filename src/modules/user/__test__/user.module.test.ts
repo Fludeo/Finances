@@ -1,25 +1,24 @@
-import { IDIContainer } from 'rsdi';
-import  { initUserModule } from '../module';
 
-const app :any = jest.fn();
+import { initUserModule } from '../module'
+
+const app: any = jest.fn()
 
 const controller = {
-  configureRoutes: jest.fn(),
-};
+  configureRoutes: jest.fn()
+}
 
 const container = {
-  get: jest.fn(() => controller),
-} as IDIContainer;
+  get: jest.fn(() => controller)
+}
 
 test('User module gets initialized correctly', () => {
+  initUserModule(container, app)
 
-  initUserModule(container,app);
+  expect(container.get).toHaveBeenCalledTimes(1)
 
-  expect(container.get).toHaveBeenCalledTimes(1);
+  expect(container.get).toHaveBeenCalledWith('UserController')
 
-  expect(container.get).toHaveBeenCalledWith('UserController');
+  expect(controller.configureRoutes).toHaveBeenCalledTimes(1)
 
-  expect(controller.configureRoutes).toHaveBeenCalledTimes(1);
-
-  expect(controller.configureRoutes).toHaveBeenCalledWith(app);
-});
+  expect(controller.configureRoutes).toHaveBeenCalledWith(app)
+})
