@@ -1,12 +1,12 @@
 
-import ConfigureDIC from '../DIconfig'
+import AppBootstrapper from '../../modules/__test__/initModules'
 
 describe('DI is loading the right dependencies', () => {
-  const container: any = ConfigureDIC()
+  const { container }: { container: any } = AppBootstrapper()
 
-  const { definitions } = container
+  const definitions = container.resolvers
 
-  test('DI is loading the right top level dependencies', () => {
+  test('DI is loading the right top level dependencies', async () => {
     expect(definitions).toHaveProperty('sequelize')
     expect(definitions).toHaveProperty('AuthController')
     expect(definitions).toHaveProperty('AuthService')
@@ -22,7 +22,7 @@ describe('DI is loading the right dependencies', () => {
     expect(definitions).toHaveProperty('RecordModel')
   })
 
-  test('AuthController is constructed with the right dependencies', () => {
+  test('AuthController is constructed with the right dependencies', async () => {
     const { AuthController } = definitions
     const expected = [
       expect.objectContaining({ existingDefinitionName: 'AuthService' })
@@ -30,7 +30,7 @@ describe('DI is loading the right dependencies', () => {
     expect(AuthController.deps).toEqual(expect.arrayContaining(expected))
   })
 
-  test('AuthService is constructed with the right dependencies', () => {
+  test('AuthService is constructed with the right dependencies', async () => {
     const { AuthService } = definitions
     const expected = [
       expect.objectContaining({ existingDefinitionName: 'AuthRepository' }),
@@ -39,13 +39,13 @@ describe('DI is loading the right dependencies', () => {
     expect(AuthService.deps).toEqual(expect.arrayContaining(expected))
   })
 
-  test('AuthRepository is constructed with the right dependencies', () => {
+  test('AuthRepository is constructed with the right dependencies', async () => {
     const { AuthRepository } = definitions
     const expected = [expect.objectContaining({ existingDefinitionName: 'AuthModel' })]
     expect(AuthRepository.deps).toEqual(expect.arrayContaining(expected))
   })
 
-  test('UserController is constructed with the right dependencies', () => {
+  test('UserController is constructed with the right dependencies', async () => {
     const { UserController } = definitions
     const expected = [
       expect.objectContaining({ existingDefinitionName: 'UserService' }),
@@ -54,13 +54,13 @@ describe('DI is loading the right dependencies', () => {
     expect(UserController.deps).toEqual(expect.arrayContaining(expected))
   })
 
-  test('UserService is constructed with the right dependencies', () => {
+  test('UserService is constructed with the right dependencies', async () => {
     const { UserService } = definitions
     const expected = [expect.objectContaining({ existingDefinitionName: 'UserRepository' })]
     expect(UserService.deps).toEqual(expect.arrayContaining(expected))
   })
 
-  test('UserRepository is constructed with the right dependencies', () => {
+  test('UserRepository is constructed with the right dependencies', async () => {
     const { UserRepository } = definitions
     const expected = [
       expect.objectContaining({ existingDefinitionName: 'UserModel' }),
@@ -70,7 +70,7 @@ describe('DI is loading the right dependencies', () => {
     expect(UserRepository.deps).toEqual(expect.arrayContaining(expected))
   })
 
-  test('RecordController is constructed with the right dependencies', () => {
+  test('RecordController is constructed with the right dependencies', async () => {
     const { RecordController } = definitions
     const expected = [
       expect.objectContaining({ existingDefinitionName: 'AuthService' }),
@@ -79,13 +79,13 @@ describe('DI is loading the right dependencies', () => {
     expect(RecordController.deps).toEqual(expect.arrayContaining(expected))
   })
 
-  test('RecordService is constructed with the right dependencies', () => {
+  test('RecordService is constructed with the right dependencies', async () => {
     const { RecordService } = definitions
     const expected = [expect.objectContaining({ existingDefinitionName: 'RecordRepository' })]
     expect(RecordService.deps).toEqual(expect.arrayContaining(expected))
   })
 
-  test('RecordRepository is constructed with the right dependencies', () => {
+  test('RecordRepository is constructed with the right dependencies', async () => {
     const { RecordRepository } = definitions
     const expected = [
       expect.objectContaining({ existingDefinitionName: 'RecordModel' }),
