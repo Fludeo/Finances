@@ -22,6 +22,10 @@ const mockAuthModel: any = {
 const mockUserRepository = new UserRepository(mockUserModel, mockRecordModel, mockAuthModel)
 
 describe('testing all methods in AuthRepository', () => {
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   test('Adding new user', async () => {
     const user: any = new User(1, 'leandro', 'newuser@email.com', 'encryptedpass')
     user as (User & { save: any })
@@ -30,6 +34,7 @@ describe('testing all methods in AuthRepository', () => {
     await mockUserModel.build.mockReturnValue(user)
     await mockUserRepository.addUser(user)
 
+    expect(mockUserModel.build).toBeCalledTimes(1)
     expect(mockUserModel.build).toBeCalledWith({ name: user.name, email: user.email, hash: user.hash })
     expect(user.save).toBeCalledTimes(1)
   })
@@ -88,23 +93,21 @@ describe('testing all methods in AuthRepository', () => {
 
     expect(mockUserModel.findByPk).toBeCalledWith(user.id)
     expect(user.addAuth).toBeCalledTimes(1)
-    expect(mockRecordModel.create).toBeCalledTimes(1)
   })
 
-  test('Adds session token to user', async () => {
+  test('Get user Records', async () => {
     const user: any = new User(2, 'leandro', 'addrecord@email.com', 'encryptedpass')
-
-    user.addAuth = jest.fn()
 
     const record1 = new Record(1, 'job', 2000, 'income', 'Salary', new Date())
     const record2 = new Record(2, 'Food', 500, 'outgo', 'Food', new Date())
+
     user.records = [record1, record2]
 
     mockUserModel.findByPk.mockReturnValue(user)
 
     const result = await mockUserRepository.getRecords(user)
 
-    expect(mockUserModel.findByPk).toBeCalled()
+    expect(mockUserModel.findByPk).toBeCalledTimes(1)
     expect(result.records).toEqual(user.records)
   })
 })

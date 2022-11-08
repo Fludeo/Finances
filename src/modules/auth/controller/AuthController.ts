@@ -40,11 +40,8 @@ export default class AuthController {
       res.clearCookie(String(process.env.HTTPONLY_COOKIE_NAME), { httpOnly: true, secure: true, path: '/auth/session' })
 
       const httpOnlyToken = cookie?.split('=')[1]
-      if (httpOnlyToken === undefined) {
-        throw new InvalidRefreshTokenError()
-      }
 
-      await this.authService.logout(httpOnlyToken)
+      await this.authService.logout(httpOnlyToken as string)
 
       res.status(200)
       res.send()
@@ -54,15 +51,14 @@ export default class AuthController {
   }
 
   async session (req: Request, res: Response, next: NextFunction): Promise<any> {
-    if (req.body.logout === true) { return await this.logout(req, res, next) }
-
+    const cookie = req.headers.cookie
     try {
-      const cookie = req.headers.cookie
-
       if (cookie === undefined) {
         throw new InvalidRefreshTokenError()
       }
+      if (req.body.logout === true) { return await this.logout(req, res, next) }
       const httpOnlyToken: string = cookie?.split('=')[1]
+
       const newAccesToken = await this.authService.refreshToken(httpOnlyToken, res)
 
       res.status(200)

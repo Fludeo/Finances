@@ -135,6 +135,7 @@ describe('Testing all methods and routes in AuthController', () => {
 
     const logoutResponse = await request(app)
       .post('/auth/session')
+      .send({ logout: true })
       .set('Cookie', cookie)
 
     expect(logoutResponse.status).toEqual(200)

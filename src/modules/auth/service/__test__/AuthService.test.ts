@@ -31,12 +31,16 @@ const mockUserService: any = {
 const mockService = new AuthService(mockUserService, mockAuthRepository)
 
 describe('Testing all methods in AuthService', () => {
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   test('Access Token generation and authentication', async () => {
     const user = new User(1, 'leandro', 'leandro@gmail.com', 'pass', undefined, undefined, undefined, undefined)
     const response: any = { cookie: jest.fn() }
     const result = await mockService.giveAccessToken(user, response)
 
-    expect(mockUserService.saveRefreshToken).toBeCalled()
+    expect(mockUserService.saveRefreshToken).toBeCalledTimes(1)
     expect(result).toHaveProperty('accessToken', `${result.accessToken}`)
 
     const req = { headers: { authorization: `Bearer ${result.accessToken}` } }
@@ -45,7 +49,7 @@ describe('Testing all methods in AuthService', () => {
 
     await mockService.authenticateToken(req as Request, res as Response, next)
 
-    expect(next).toBeCalled()
+    expect(next).toBeCalledTimes(1)
   })
 
   test('Testing login method', async () => {
@@ -75,7 +79,8 @@ describe('Testing all methods in AuthService', () => {
 
     const result = await mockService.login(loginDto, res)
 
-    expect(res.cookie).toBeCalled()
+    expect(res.cookie).toBeCalledTimes(1)
+    expect(mockUserService.getUserByEmail).toBeCalledTimes(1)
     expect(mockUserService.getUserByEmail).toBeCalledWith(loginDto.email)
     expect(result).toHaveProperty('accessToken', `${result.accessToken}`)
   })
@@ -118,6 +123,7 @@ describe('Testing all methods in AuthService', () => {
 
     await mockService.logout(mockRefreshToken)
 
+    expect(mockAuthRepository.removeRefreshToken).toBeCalledTimes(1)
     expect(mockAuthRepository.removeRefreshToken).toBeCalledWith(mockRefreshToken)
   })
 
@@ -128,8 +134,9 @@ describe('Testing all methods in AuthService', () => {
     mockUserService.getUserByEmail.mockReturnValue({ id: 1, email: 'mock@email.com', hash: 'password' })
     const result = await mockService.refreshToken(mockRefreshToken, res)
 
+    expect(mockAuthRepository.removeRefreshToken).toBeCalledTimes(1)
     expect(mockAuthRepository.removeRefreshToken).toBeCalledWith(mockRefreshToken)
-    expect(mockUserService.getUserByEmail).toBeCalled()
+    expect(mockUserService.getUserByEmail).toBeCalledTimes(1)
     expect(res.cookie).toBeCalled()
     expect(result).toHaveProperty('accessToken')
   })

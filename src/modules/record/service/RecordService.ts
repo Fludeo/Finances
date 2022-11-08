@@ -1,7 +1,7 @@
 
 import User from '../../user/entity/User'
 import Record from '../entity/Record'
-import { RecordDoesNotExist, RecordNotDefined } from '../errors/__index'
+import { RecordNotDefined } from '../errors/__index'
 import RecordRepository from '../repository/RecordRepository'
 
 export default class RecordService {
@@ -19,10 +19,6 @@ export default class RecordService {
     await this.recordRepository.addRecord(record, user)
   }
 
-  async deleteRecord (recordId: number): Promise<void> {
-    return await this.recordRepository.deleteRecord(recordId)
-  }
-
   async updateRecord (record: Record): Promise<void> {
     if (!(record instanceof Record)) {
       throw new RecordNotDefined()
@@ -38,11 +34,7 @@ export default class RecordService {
     return await this.recordRepository.getRecordById(recordId)
   }
 
-  async deleteRecordById (recordId: number, user: User): Promise<void> {
-    const recordToDelete = await this.recordRepository.getRecordById(recordId)
-    if (recordToDelete.userId !== user.id) {
-      throw new RecordDoesNotExist()
-    }
+  async deleteRecordById (recordId: number): Promise<void> {
     await this.recordRepository.deleteRecordById(recordId)
   }
 

@@ -7,19 +7,17 @@ import RecordModel from '../model/RecordModel'
 
 export default class RecordRepository {
   private readonly recordModel
-  constructor (recordModel: RecordModel) {
+  private readonly userModel
+  constructor (recordModel: RecordModel, userModel: UserModel) {
     this.recordModel = recordModel as any
+    this.userModel = userModel as any
   }
 
   async addRecord (newRecord: Record, user: User): Promise<void> {
     const record = await this.recordModel.create(newRecord, { isNewRecord: true })
-    const userToAdd = await UserModel.findByPk(user.id)
+    const userToAdd = await this.userModel.findByPk(user.id)
 
     await record.setUser(userToAdd)
-  }
-
-  async deleteRecord (recordId: number): Promise<void> {
-    await this.recordModel.destroy({ where: { recordId } })
   }
 
   async updateRecord (record: Record): Promise<void> {
