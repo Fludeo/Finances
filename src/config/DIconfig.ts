@@ -47,7 +47,7 @@ function addRecordDefinitions (container: DIContainer): void {
   container.add({
     RecordController: object(RecordController).construct(use(RecordService), use(AuthService)),
     RecordService: object(RecordService).construct(use(RecordRepository)),
-    RecordRepository: object(RecordRepository).construct(use(RecordModel)),
+    RecordRepository: object(RecordRepository).construct(use(RecordModel), use(UserModel)),
     RecordModel: factory(configureRecordModel)
 
   })

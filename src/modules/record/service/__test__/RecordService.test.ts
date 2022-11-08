@@ -36,12 +36,10 @@ describe('Testing all methods in RecordService', () => {
   })
 
   test('Deleting record by Id', async () => {
-    const user = new User(1, 'leandro', 'record@email.com', 'encriptedpass')
     const record = new Record(1, 'Food', 500, 'outgo', 'Food', new Date(), 1)
 
-    mockRecordRepository.getRecordById.mockReturnValue(record)
-    await mockService.deleteRecordById(record.id as number, user)
-    expect(mockRecordRepository.getRecordById).toBeCalledTimes(1)
+    await mockService.deleteRecordById(record.id as number)
+
     expect(mockRecordRepository.deleteRecordById).toBeCalledTimes(1)
   })
 

@@ -86,9 +86,8 @@ export default class RecordController {
 
   async deleteRecordById (req: Request, res: Response, next: NextFunction): Promise<void> {
     const recordId: number = Number(req.params.id)
-    const user = (req as Request & { user: any }).user
     try {
-      await this.recordService.deleteRecordById(recordId, user)
+      await this.recordService.deleteRecordById(recordId)
       res.sendStatus(200)
     } catch (err) {
       next(err)
