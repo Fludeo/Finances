@@ -9,6 +9,10 @@ const mockAuthModel: any = {
 const mockAuthRepository = new AuthRepository(mockAuthModel)
 
 describe('testing all methods in AuthRepository', () => {
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   test('Save session token', async () => {
     const token = 'refreshtoken'
 
@@ -21,6 +25,7 @@ describe('testing all methods in AuthRepository', () => {
     mockAuthModel.build.mockReturnValue(savedToken)
 
     const result = await mockAuthRepository.saveRefreshToken(token)
+    expect(mockAuthModel.build).toBeCalledTimes(1)
     expect(mockAuthModel.build).toBeCalledWith({ refreshToken: token })
     expect(result).toHaveProperty('refreshToken', token)
   })
@@ -31,6 +36,7 @@ describe('testing all methods in AuthRepository', () => {
     mockAuthModel.destroy.mockReturnValue({ refreshToken: token })
 
     await mockAuthRepository.removeRefreshToken(token)
+    expect(mockAuthModel.destroy).toBeCalledTimes(1)
     expect(mockAuthModel.destroy).toBeCalledWith({ where: { refreshToken: token } })
   })
 })

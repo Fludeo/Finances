@@ -18,10 +18,6 @@ export default class RecordRepository {
     await record.setUser(userToAdd)
   }
 
-  async deleteRecord (recordId: number): Promise<void> {
-    await this.recordModel.destroy({ where: { recordId } })
-  }
-
   async updateRecord (record: Record): Promise<void> {
     await this.recordModel.update(record, { where: { id: record.id } })
   }

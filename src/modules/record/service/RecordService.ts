@@ -19,10 +19,6 @@ export default class RecordService {
     await this.recordRepository.addRecord(record, user)
   }
 
-  async deleteRecord (recordId: number): Promise<void> {
-    return await this.recordRepository.deleteRecord(recordId)
-  }
-
   async updateRecord (record: Record): Promise<void> {
     if (!(record instanceof Record)) {
       throw new RecordNotDefined()

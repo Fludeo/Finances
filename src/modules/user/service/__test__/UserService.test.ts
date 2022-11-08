@@ -19,12 +19,17 @@ const mockUserRepository: any = {
 const mockService = new UserService(mockUserRepository)
 
 describe('Testing all methods in UserService', () => {
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   test('Get user by email', async () => {
     const mockUser = new User(1, 'leandro', 'getuser@email.com', 'encriptedpass')
 
     mockUserRepository.getByEmail.mockReturnValue(mockUser)
     const user = await mockService.getUserByEmail(mockUser.email)
 
+    expect(mockUserRepository.getByEmail).toBeCalledTimes(1)
     expect(mockUserRepository.getByEmail).toBeCalledWith(mockUser.email)
     expect(user).toEqual(mockUser)
   })
@@ -35,7 +40,7 @@ describe('Testing all methods in UserService', () => {
     mockUserRepository.getByEmail.mockReturnValue(null)
 
     await expect(mockService.getUserByEmail(mockUser.email)).rejects.toThrowError(UserNotFound)
-
+    expect(mockUserRepository.getByEmail).toBeCalledTimes(1)
     expect(mockUserRepository.getByEmail).toBeCalledWith(mockUser.email)
   })
 
@@ -45,6 +50,7 @@ describe('Testing all methods in UserService', () => {
     mockUserRepository.getById.mockReturnValue(mockUser)
     const user = await mockService.getUserById(mockUser.id as number)
 
+    expect(mockUserRepository.getById).toBeCalledTimes(1)
     expect(mockUserRepository.getById).toBeCalledWith(mockUser.id)
     expect(user).toEqual(mockUser)
   })
@@ -56,6 +62,7 @@ describe('Testing all methods in UserService', () => {
 
     await expect(mockService.getUserById(mockUser.id as number)).rejects.toThrowError(UserNotFound)
 
+    expect(mockUserRepository.getById).toBeCalledTimes(1)
     expect(mockUserRepository.getById).toBeCalledWith(mockUser.id)
   })
 
@@ -68,8 +75,9 @@ describe('Testing all methods in UserService', () => {
 
     expect(await mockService.newUser(mockNewUser)).toEqual(mockReturnedUser)
 
+    expect(mockUserRepository.addUser).toBeCalledTimes(1)
     expect(mockUserRepository.addUser).toBeCalledWith(mockNewUser)
-
+    expect(mockUserRepository.getByEmail).toBeCalledTimes(1)
     expect(mockUserRepository.getByEmail).toBeCalledWith(mockNewUser.email)
   })
 
@@ -94,6 +102,7 @@ describe('Testing all methods in UserService', () => {
     mockUserRepository.getByEmail.mockReturnValue(mockNewUser)
     await expect(mockService.newUser(mockNewUser)).rejects.toThrowError(CredentialsTaken)
 
+    expect(mockUserRepository.getByEmail).toBeCalledTimes(1)
     expect(mockUserRepository.getByEmail).toBeCalledWith(mockNewUser.email)
   })
 
@@ -102,6 +111,7 @@ describe('Testing all methods in UserService', () => {
     const token = 'refreshtoken'
     await mockService.saveRefreshToken(user, token)
 
+    expect(mockUserRepository.addRefreshToken).toBeCalledTimes(1)
     expect(mockUserRepository.addRefreshToken).toBeCalledWith(user, token)
   })
 
@@ -112,6 +122,7 @@ describe('Testing all methods in UserService', () => {
 
     await mockService.addRecord(record, user)
 
+    expect(mockUserRepository.addRecord).toBeCalledTimes(1)
     expect(mockUserRepository.addRecord).toBeCalledWith(record, user)
   })
 })
