@@ -13,7 +13,7 @@ This is the backend repository of https://fludeo.github.io/Finances_app/ webApp.
 This app (server) is built with TypeScript and Node.js using Express.js as lightweight framework. 
 Sqlite was used through the ORM Sequelize to store Data and sessions. Sessions are implemented with jsonwebtoken using the access-token / refresh-token strategy.
 On Login, the server sets a refresh-token inside a http-only-cookie. A user can have multiple sessions in different devices.
-The app is tested with supertest, and jest. Use <code>npx jest</code> to run the tests.
+The app is tested with supertest, and jest. Use <code>npx jest</code> to run all tests.
 
 #C4 diagram
 
