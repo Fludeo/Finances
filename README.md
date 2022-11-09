@@ -4,6 +4,7 @@ TypeScript version
 - Clone repository or download zip. 
 - Install the project with <code>npm install</code>
 - Create .env and .env.test (in root folder) files with variables listed in .env.dist
+- Set .env PROJECT_STATUS = development and .env.test PROJECT_STATUS = test
 - Run server with <code>npm run dev</code> or <code>npm run start</code> (start does not keep track of changes in code)
 
 # Introduction
