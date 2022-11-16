@@ -23,6 +23,15 @@ exports.app.use(express_1.default.urlencoded({ extended: true }));
 (0, module_1.initAuthModule)(container, exports.app);
 (0, module_2.initRecordModule)(container, exports.app);
 (0, module_3.initUserModule)(container, exports.app);
+// This route is only created for e2e testing. Wipes all data in tables
+if (process.env.PROJECT_STATUS === 'test') {
+    exports.app.get('/reset', (req, res) => {
+        const sec = container.get('sequelize');
+        sec.drop();
+        sec.sync({ force: true });
+        res.sendStatus(200);
+    });
+}
 exports.app.use(function (err, req, res, next) {
     console.log(err);
     res.status(err.code);

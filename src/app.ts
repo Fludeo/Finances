@@ -25,12 +25,13 @@ initAuthModule(container as IDIContainer, app)
 initRecordModule(container as IDIContainer, app)
 initUserModule(container as IDIContainer, app)
 
-// This route is only created for e2e testing. Wipe all data in tables
+// This route is only created for e2e testing. Wipes all data in tables
 if (process.env.PROJECT_STATUS === 'test') {
-  app.get('/reset', () => {
+  app.get('/reset', (req, res) => {
     const sec = (container as IDIContainer).get('sequelize')
     sec.drop()
-    sec.sync({ force: true })
+    sec.sync()
+    res.sendStatus(200)
   })
 }
 
