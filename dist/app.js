@@ -28,7 +28,7 @@ if (process.env.PROJECT_STATUS === 'test') {
     exports.app.get('/reset', (req, res) => {
         const sec = container.get('sequelize');
         sec.drop();
-        sec.sync();
+        sec.sync({ force: true });
         res.sendStatus(200);
     });
 }
