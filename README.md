@@ -21,3 +21,12 @@ The app is tested with supertest, and jest. Use <code>npx jest</code> to run all
 ![Architecture-Page-1](https://user-images.githubusercontent.com/55941066/200713133-f7c55fd7-c670-443c-b785-8f8e33190bf1.jpg)
 ![Architecture-Page-2](https://user-images.githubusercontent.com/55941066/200713146-28fc3d31-f2ca-4351-9040-363989ab6f52.jpg)
 ![Architecture-Page-3](https://user-images.githubusercontent.com/55941066/200713151-d4365ffa-343b-420f-86cf-a5bc820ff188.jpg)
+
+# e2e test and backend unit test
+
+https://user-images.githubusercontent.com/55941066/204585925-d1578956-1d71-4544-b668-e1550559cdb4.mp4
+
+
+
+https://user-images.githubusercontent.com/55941066/204586069-9892a951-62a2-49b4-b023-6a4ee06e4801.mp4
+
